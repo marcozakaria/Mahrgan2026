@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موسوعة الآباء البطاركة التفاعلية</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #c5a059;
+            --bg-color: #f4f6f8;
+            --text-color: #2d3436;
+            --white: #ffffff;
+            --table-bg: #f8f9fa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #1a252f);
+            color: var(--white);
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 5px solid var(--accent-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: #b2bec3;
+            font-size: 1.1rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #1a252f;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: #dfe6e9;
+            padding: 15px 25px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav button:hover, nav button.active {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .intro-box {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            border-right: 5px solid var(--accent-color);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer; /* ليشعر المستخدم أنها قابلة للضغط */
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 250px;
+            background-color: #eaeff2;
+            position: relative;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.25rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #636e72;
+            text-align: justify;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: auto;
+            font-size: 0.85rem;
+            background: var(--table-bg);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .info-table td {
+            padding: 6px 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .info-table td.label {
+            font-weight: bold;
+            color: var(--primary-color);
+            width: 40%;
+        }
+
+        /* تنسيق أزرار الانتقال أسفل الصفحات */
+        .page-navigation {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed #ccc;
+        }
+
+        .next-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: 2px solid var(--accent-color);
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .next-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+
+        /* النافذة المنبثقة لقصة الحياة (Modal) */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.6); 
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-top: 6px solid var(--accent-color);
+            animation: modalSlideUp 0.4s ease;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #d63031;
+        }
+
+        .modal h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .modal-body {
+            font-size: 1.05rem;
+            color: #2d3436;
+            text-align: justify;
+            white-space: pre-line; /* للحفاظ على تنسيق الأسطر الفاصلة للقصة */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes modalSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            margin-top: 5rem;
+            border-top: 5px solid var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            nav { flex-wrap: wrap; }
+            nav button { flex: 1 1 50%; padding: 10px; font-size: 0.95rem; }
+            .modal-content { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>موسوعة الآباء البطاركة التفاعلية</h1>
+        <p>اضغط على أي بطريرك لقراءة قصة حياته الكاملة وأعماله التاريخية بالتفصيل</p>
+    </header>
+
+    <nav>
+        <button onclick="showPage('group1')" id="btn-group1" class="active">القرون الأولى (1 - 5)</button>
+        <button onclick="showPage('group2')" id="btn-group2">العصور الوسطى (6 - 12)</button>
+        <button onclick="showPage('group3')" id="btn-group3">العصر الممتد (13 - 19)</button>
+        <button onclick="showPage('group4')" id="btn-group4">العصر الحديث والمعاصر</button>
+    </nav>
+
+    <div class="container">
+        
+        <!-- الصفحة الأولى -->
+        <div id="group1" class="page active">
+            <div class="intro-box">
+                <h2>القرون الأولى وتأسيس الإيمان</h2>
+                <p>مرحباً بك في الصفحة الأولى. اضغط على كارت أي بطريرك لعرض سيرته التفصيلية كاملة.</p>
+            </div>
+            <div class="grid">
+                <div class="card" onclick="openStory(1)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 1</span>
+                        <img src="https://i.etsystatic.com/23754934/r/il/f4bcc7/3295518230/il_570xN.3295518230_tbg2.jpg" alt="القديس مرقس الرسول">
+                    </div>
+                    <div class="card-content">
+                        <h3>القديس مرقس الرسول</h3>
+                        <p>كاروز الديار المصرية ومؤسس الكنيسة القبطية وصاحب الإنجيل الثاني.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>بداية القرن 1م</td></tr>
+                            <tr><td class="label">تاريخ الاستشهاد</td><td>68 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>نحو 7 سنوات بمصر</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(2)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 2</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Anianus" alt="البابا إنيانوس">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا إنيانوس</h3>
+                        <p>الإسكافى الذي شفى مارمرقس يده وآمن ورُسم كأول أسقف ثم بطريرك خلفاً له.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>غير محدد بدقة</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>86 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>22 سنة</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(3)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 12</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Demetrius" alt="البابا ديمتريوس الكرام">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا ديمتريوس الكرام</h3>
+                        <p>عالم زراعي تقي، وضع حساب الأبقطي لضبط مواقيت الأعياد والمواسم المسيحية.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>غير محدد بدقة</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>224 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>43 سنة</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(4)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 16</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Peter+I" alt="البابا بطرس خاتم الشهداء">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا بطرس الأول</h3>
+                        <p>يُلقب بـ "خاتم الشهداء"، قاد الكنيسة بحزم وروية في ذروة اضطهاد ديوكلتيانوس المروع.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>منتصف القرن الثالث</td></tr>
+                            <tr><td class="label">تاريخ الاستشهاد</td><td>311 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>9 سنوات و9 أشهر</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(5)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 20</span>
+                        <img src="https://fraangelicoinstitute.com/wp-content/uploads/2019/03/icon-st.-athanaius-the-great.jpg" alt="البابا أثناسيوس الرسولي">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا أثناسيوس الرسولي</h3>
+                        <p>حامي الإيمان وصاحب قانون الإيمان وبطل مجمع نيقية المسكوني الشهير.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>296 ميلادية</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>373 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>45 سنة</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(6)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 24</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Cyril+I" alt="البابا كيرلس الكبير">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا كيرلس الأول (عمود الدين)</h3>
+                        <p>بطل مجمع أفسس والمدافع الشرس عن عقيدة تجسد الكلمة ولقب "ثيؤطوكوس".</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>376 ميلادية</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>444 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>31 سنة و8 أشهر</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="page-navigation">
+                <button class="next-btn" onclick="showPage('group2')">الصفحة التالية: العصور الوسطى ←</button>
+            </div>
+        </div>
+
+        <!-- الصفحة الثانية -->
+        <div id="group2" class="page">
+            <div class="intro-box">
+                <h2>العصور الوسطى واستقرار الهوية</h2>
+                <p>مرحباً بك في الصفحة الثانية. طالع بطاركة هذه الحقبة التاريخية المهمة.</p>
+            </div>
+            <div class="grid">
+                <div class="card" onclick="openStory(7)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 38</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Benjamin+I" alt="البابا بنيامين الأول">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا بنيامين الأول</h3>
+                        <p>البطريرك العظيم الذي عاصر دخول العرب لمصر وأعاد إعمار الكنائس والأديرة المخربة.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>590 ميلادية</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>662 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>39 سنة</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(8)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 48</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+John+IV" alt="البابا يوحنا الرابع">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا يوحنا الرابع</h3>
+                        <p>تميز بقلبه الحاني ورعايته الفائقة للمحتاجين وبداية تدوين تاريخ البطاركة القدامى.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>غير محدد بدقة</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>799 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>23 سنة</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(9)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 62</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Abraham" alt="البابا أبرآم بن زرعة">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا أبرآم بن زرعة</h3>
+                        <p>البطريرك التقي والزاهد الذي جرت في عهده معجزة نقل جبل المقطم الشهيرة بمصر.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>أوائل القرن العاشر</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>979 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>3 سنوات و6 أشهر</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(10)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 67</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Christodolos" alt="البابا خرستوذولوس">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا خرستوذولوس</h3>
+                        <p>البطريرك الذي نقل المقر البابوي من مدينة الإسكندرية الساحلية إلى مدينة القاهرة.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>غير محدد بدقة</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>1077 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>31 سنة</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(11)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 74</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+John+V" alt="البابا يوحنا الخامس">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا يوحنا الخامس</h3>
+                        <p>حافظ على سلامة الرعية والطقوس الكنسية في ظل تقلبات سياسية وعسكرية معقدة.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>غير محدد بدقة</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>1166 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>19 سنة</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="page-navigation">
+                <button class="next-btn" onclick="showPage('group3')">الصفحة التالية: العصر الممتد ←</button>
+            </div>
+        </div>
+
+        <!-- الصفحة الثالثة -->
+        <div id="group3" class="page">
+            <div class="intro-box">
+                <h2>العصر الممتد وبدايات الإصلاح الحديث</h2>
+                <p>مرحباً بك في الصفحة الثالثة. تصفح سِيَر رواد التعليم والإصلاح الإداري والكنسي.</p>
+            </div>
+            <div class="grid">
+                <div class="card" onclick="openStory(12)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 85</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+John+XI" alt="البابا يوحنا الحادي عشر">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا يوحنا الحادي عشر</h3>
+                        <p>نقل المقر البابوي الكنسي إلى كنيسة العذراء الأثرية بحارة زويلة بالقاهرة لمصلحة الخدمة.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>غير دقيق بالعام</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>1452 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>24 سنة و7 أشهر</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(13)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 103</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+John+XVIII" alt="البابا يوحنا الثامن عشر">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا يوحنا الثامن عشر</h3>
+                        <p>عاصر أحداثاً جسيمة في تاريخ مصر الحديث ومنها الحملة الفرنسية بقيادة نابليون.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>غير دقيق بالعام</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>1796 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>26 سنة و11 شهراً</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(14)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 110</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Peter+VII" alt="البابا بطرس الجاولي">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا بطرس السابع (الجاولي)</h3>
+                        <p>رجل المواقف الوطنية العظيمة والرافض التام لأي حماية أجنبية مسيسة لكنيسته.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>1770 ميلادية</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>1852 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>43 سنة</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(15)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 111</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Cyril+IV" alt="البابا كيرلس الرابع">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا كيرلس الرابع (أبو الإصلاح)</h3>
+                        <p>رائد ومؤسس النهضة التعليمية الكبرى؛ أنشأ المدارس وأدخل المطبعة المرقسية لمصر.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>1816 ميلادية</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>1861 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>7 سنوات</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(16)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 112</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Demetrius+II" alt="البابا ديمتريوس الثاني">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا ديمتريوس الثاني</h3>
+                        <p>تابع مسيرة الإصلاح وحضر حفل افتتاح قناة السويس التاريخي بدعوة رسمية.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>1810 ميلادية</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>1870 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>7 سنوات و11 شهراً</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(17)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 115</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Yousab+II" alt="البابا يوساب الثاني">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا يوساب الثاني</h3>
+                        <p>تأسس في عهده معهد الدراسات القبطية العريق وشهد نمواً ملحوظاً في أنشطة مدارس الأحد.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>1875 ميلادية</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>1956 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>10 سنوات</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="page-navigation">
+                <button class="next-btn" onclick="showPage('group4')">الصفحة التالية: العصر الحديث والمعاصر ←</button>
+            </div>
+        </div>
+
+        <!-- الصفحة الرابعة -->
+        <div id="group4" class="page">
+            <div class="intro-box">
+                <h2>العصر المعاصر والامتداد المسكوني</h2>
+                <p>مرحباً بك في الصفحة الرابعة والأخيرة. هنا تجد سِيَر آباء الكنيسة المعاصرين الذين عاصرنا نهضتهم الروحية الشاملة.</p>
+            </div>
+            <div class="grid">
+                <div class="card" onclick="openStory(18)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 113</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Cyril+V" alt="البابا كيرلس الخامس">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا كيرلس الخامس</h3>
+                        <p>عميد البطاركة؛ صاحب أطول مدة جلوس ورعاية حكيمة وثابتة في تاريخ الكنيسة القبطية.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>1824 ميلادية</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>1927 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>52 سنة و9 أشهر</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(19)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 114</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Macarius+III" alt="البابا مكاريوس الثالث">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا مكاريوس الثالث</h3>
+                        <p>اتسم بالهدوء الشديد والزهد الرهباني المخلص والاهتمام البالغ بإصلاح قوانين الأديرة.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>1872 ميلادية</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>1945 ميلادية</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>سنة واحدة و6 أشهر</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(20)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 116</span>
+                        <img src="https://orthodoxwiki.org/thumb.php?f=PopeCyril14.jpg&width=300" alt="البابا كيرلس السادس">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا كيرلس السادس</h3>
+                        <p>رجل الصلاة والصلة الروحية العميقة؛ شهد عهده ظهور العذراء بالزيتون وبناء الكاتدرائية بالعباسية.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>2 أغسطس 1902</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>9 مارس 1971</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>11 سنة و10 أشهر</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(21)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 117</span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Pope_Shenouda_III_of_Alexandria_by_Chuck_Kennedy_%28Official_White_House_Photostream%29.jpg" alt="البابا شنودة الثالث">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا شنودة الثالث</h3>
+                        <p>معلم الأجيال؛ رائد التعليم والكرازة والامتداد العالمي وبناء مئات الكنائس في المهجر.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>3 أغسطس 1923</td></tr>
+                            <tr><td class="label">تاريخ النياحة</td><td>17 مارس 2012</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>40 سنة و4 أشهر</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openStory(22)">
+                    <div class="card-img-container">
+                        <span class="badge">رقم 118</span>
+                        <img src="https://via.placeholder.com/350x250?text=Pope+Tawadros+II" alt="البابا تواضروس الثاني">
+                    </div>
+                    <div class="card-content">
+                        <h3>البابا تواضروس الثاني</h3>
+                        <p>البابا الحالي للكنيسة؛ يقود الكنيسة بروح الحكمة، العمل المؤسسي المتطور، والاهتمام بالشباب.</p>
+                        <table class="info-table">
+                            <tr><td class="label">تاريخ الميلاد</td><td>4 نوفمبر 1952</td></tr>
+                            <tr><td class="label">تاريخ الجلوس</td><td>18 نوفمبر 2012</td></tr>
+                            <tr><td class="label">مدة الجلوس</td><td>مستمر بالخدمة بالروح والحكمة</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="page-navigation">
+                <button class="next-btn" onclick="showPage('group1')">العودة للصفحة الأولى ↺</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- كود النافذة المنبثقة التفاعلية -->
+    <div id="storyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeStory()">&times;</span>
+            <h2 id="modalTitle">اسم البطريرك</h2>
+            <div id="modalBody" class="modal-body">قصة الحياة والنهضة...</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>موسوعة الآباء البطاركة التفاعلية الشاملة © 2026 - تصفح مرن وقصص تفصيلية</p>
+    </footer>
+
+    <script>
+        // داتا قصص حياة الآباء الـ 22 بالتفصيل لتعرض تفاعلياً عند الضغط
+        const stories = {
+            1: {
+                title: "القديس مرقس الرسول (البطريرك 1)",
+                text: "ولد في القيروان بإفريقيا، وانتقلت عائلته لاحقاً إلى فلسطين. آمن بالسيد المسيح وكان بيته أول كنيسة مسيحية في العالم (العِلية) حيث صنع الفصح وحل الروح القدس على التلاميذ.\n\nبدأ كرازته بالديار المصرية حوالي عام 61م، وأسس المدرسة اللاهوتية بالإسكندرية لمواجهة الفلسفات الوثنية. وضع القداس الإلهي (الذي نقحه الأنبا كيرلس لاحقاً)، واستشهد سحباً في شوارع الإسكندرية على يد الوثنيين عام 68م ليصبح كاروز الديار المصرية وخاتم شهداء القرن الأول فيها."
+            },
+            2: {
+                title: "البابا إنيانوس (البطريرك 2)",
+                text: "كان يعمل إسكافياً (صانع أحذية) في الإسكندرية. أثناء دخول مارمرقس للمدينة انخرم مخرز الإسكافي في يده فصرخ باليونانية 'إيس ثيؤس' (يا الله الواحد)، فشفى مرقس يده وبدأ يبشره بالإيمان المسيحي.\n\nآمن إنيانوس وأهل بيته، ونظراً لنمو الإيمان رسمه مارمرقس أسقفاً على الإسكندرية ليدير شؤون الكنيسة قبل استشهاد الرسول، وجلس على الكرسي البابوي لمدة 22 عاماً امتازت بالسلام والهدوء ونمو الرعية."
+            },
+            3: {
+                title: "البابا ديمتريوس الكرام (البطريرك 12)",
+                text: "كان رجلاً بسيطاً متزوجاً ويعمل في كرمة زراعية، ولم يكن يعرف القراءة والكتابة في البداية، ولكنه كان مملوءاً من النعمة والحكمة الإلهية.\n\nاشتهر في التاريخ المسيحي بوضعه 'حساب الأبقطي' (التقويم الفلكي الكنسي)، وهو الحساب الدقيق الذي استطاع من خلاله التوفيق بين السنة الشمسية والقمرية لتحديد موعد موحد ومثبت لعيد القيامة المجيد، لتعيد الكنائس في جميع أنحاء العالم في وقت واحد."
+            },
+            4: {
+                title: "البابا بطرس الأول - خاتم الشهداء (البطريرك 16)",
+                text: "تولى الكرسي في فترة من أصعب فترات الكنيسة وهي فترة اضطهاد الإمبراطور ديوكلتيانوس الطاغية. تميز بعلمه اللاهوتي الواسع ووضعه لقوانين الكنيسة الخاصة بالراجعين من جحود الإيمان بسبب التعذيب.\n\nفي عهده، واجه وحرم أريوس في بدايات بدعته بعد أن رأى السيد المسيح في رؤيا ثوبه ممزقاً، وأخبر تلاميذه أن أريوس هو من مزق ثوبه. قدم نفسه طواعية للاستشهاد ليفدي شعبه وينتهي بذلك عصر الاضطهاد العام، ولذا لُقب بـ 'خاتم الشهداء'."
+            },
+            5: {
+                title: "البابا أثناسيوس الرسولي - حامي الإيمان (البطريرك 20)",
+                text: "ذهب إلى مجمع نيقية المسكوني عام 325م وهو ما زال شامساً صغيراً برفقة البابا ألكسندروس، وهناك أفحم أريوس وأتباعه بذكائه وعمقه اللاهوتي وصاغ قانون الإيمان المسيحي.\n\nجلس على الكرسي البابوي 45 عاماً، نُفي خلالها عن كرسيه 5 مرات بسبب مؤامرات الأريوسيين مدعومين بالأباطرة، وكان ثابتاً كالمرسى حتى قيل له 'العالم كله ضدك يا أثناسيوس' فأجاب عبارته الخالدة: 'وأنا ضد العالم'."
+            },
+            6: {
+                title: "البابا كيرلس الأول - عمود الدين (البطريرك 24)",
+                text: "ابن أخت البابا ثاوفيلس، وتربى في برية شيهيت ليتعلم الروحيات والعلوم الكنسية. قاد مجمع أفسس المسكوني عام 431م ضد بدعة نسطور بطريرك القسطنطينية الذي أنكر أن العذراء مريم هي والدة الإله.\n\nوضع البابا كيرلس صياغة لاهوتية دقيقة تشرح اتحاد الطبيعتين في السيد المسيح وثبّت مقدمة قانون الإيمان (نعظمك يا أم النور الحقيقي)، ولأجل رسائله اللاهوتية العميقة لُقب بـ 'عمود الدين'."
+            },
+            7: {
+                title: "البابا بنيامين الأول (البطريرك 38)",
+                text: "عاصر هذا البطريرك العظيم فترة تحولات كبرى؛ حيث عانى في بداية حبريته من اضطهاد المقوقس البيزنطي واضطر للاختباء في البرية نحو 13 عاماً.\n\nمع دخول العرب إلى مصر بقيادة عمرو بن العاص، أصدر الأخير كتاب أمان للبابا بنيامين ليعود إلى كرسيه بسلام. عند عودته، تولى رعاية الرعية المشتتة، وأعاد تعمير دير الأنبا مقار ببرية شيهيت وتثبيت الإيمان الأرثوذكسي الأصيل."
+            },
+            8: {
+                title: "البابا يوحنا الرابع (البطريرك 48)",
+                text: "كان راهباً ناسكاً وعالماً فاضلاً في دير الأنبا مقار قبل اختياره للبابوية. عُرف في زمانه بالرحمة الفائقة ومحبة الفقراء بشكل لا يوصف، حيث كان يوزع كل ما يصل إلى الكنيسة على المحتاجين.\n\nاهتم بحفظ التراث الكنسي وتدوين السِيَر، وله يرجع الفضل في توثيق وحفظ الكثير من سير الآباء البطاركة الذين سبقوه لحماية التاريخ القبطي من الضياع."
+            },
+            9: {
+                title: "البابا أبرآم بن زرعة (البطريرك 62)",
+                text: "كان تاجراً سريانياً غنياً وفاضلاً، زهد في أمواله وترهب، وعند اختياره للبابوية وزع كل ثروته على الفقراء والمحتاجين ولم يبقِ لنفسه شيئاً.\n\nفي عهده، تحداه الخليفة الفاطمي المعز لدين الله بإيعاز من الوزير يعقوب بن كلس بآية نقل الجبل الموجودة في الإنجيل. فصام البابا والشعب 3 أيام، وبتوجيه من السيدة العذراء استعان بالقديس سمعان الخراز، وبصلواتهم المرفوعة اهتز ونُقل جبل المقطم معلناً قوة الإيمان."
+            },
+            10: {
+                title: "البابا خرستوذولوس (البطريرك 67)",
+                text: "كان راهباً ناسكاً في دير البراموس، وامتازت حبريته بالنشاط الرعوي الواسع وإصدار القوانين الطقسية المنظمة للصلوات داخل الكنيسة.\n\nنظراً لانتقال مركز الحكم والوزارة الفاطمية إلى مدينة القاهرة وازدياد عدد السكان هناك، قام بنقل المقر البابوي رسمياً من الإسكندرية إلى القاهرة، واتخذ من الكنيسة المعلقة بمصر القديمة مقراً رئيساً له لتسهيل رعاية شعب الكنيسة."
+            },
+            11: {
+                title: "البابا يوحنا الخامس (البطريرك 74)",
+                text: "جلس على الكرسي المرقسي في فترة عصيبة من تاريخ الشرق الأوسط وهي فترة الحروب الصليبية. قاد الكنيسة بحكمة بالغة وحافظ على حياد الأقباط التام وسلامتهم من أي تقلبات سياسية.\n\nاهتم بتثبيت الإيمان المستقيم وحل الخلافات الطقسية التي ظهرت في زمانه حول بعض الممارسات الكنسية، وعاش زاهداً ومحباً لسلام الكنيسة."
+            },
+            12: {
+                title: "البابا يوحنا الحادي عشر (البطريرك 85)",
+                text: "ولد في مدينة أبنوب ونشأ في حياة تقية. تولى قيادة الكنيسة في ظروف اقتصادية واجتماعية ضاغطة على الشعب القبطي.\n\nنظراً لتغير التوزيع السكاني للأقباط في القاهرة، قام بنقل المقر البابوي الكنسي من مصر القديمة إلى كنيسة السيدة العذراء الأثرية في حارة زويلة ليكون قريباً من رعيته ويسهل عليه خدمتهم وتفقد أحوالهم اليومية."
+            },
+            13: {
+                title: "البابا يوحنا الثامن عشر (البطريرك 103)",
+                text: "كان راهباً في دير الأنبا أنطونيوس وعُرف بعلمه وصبره الواسع. واجه خلال فترة حبريته ضغوطات سياسية ومالية شديدة من الحكام المماليك.\n\nعاصر في نهاية حياته بدايات الاضطرابات التي سبقت الحملة الفرنسية على مصر، وتميز بإدارة موارد الكنيسة بحكمة بالغة وتعمير الكنائس المتضررة وحفظ وثائق الكنيسة بحرص."
+            },
+            14: {
+                title: "البابا بطرس السابع - الجاولي (البطريرك 110)",
+                text: "من أبرز بطاركة القرن التاسع عشر وعاصر حكم محمد علي باشا الكبير. تميز بقوة الشخصية وعمق الإيمان والوطنية الخالصة.\n\nحينما جاءه سفير روسيا يعرض عليه حماية قيصر روسيا للأقباط في مصر، سأله البابا: 'هل ملككم يموت؟' فقال السفير: 'نعم'، فأجابه البابا بعزة ونعمة: 'نحن في حماية ملك لا يموت وهو رب السماء والأرض'، فاحترمه محمد علي باشا جداً لرفضه التدخل الأجنبي."
+            },
+            15: {
+                title: "البابا كيرلس الرابع - أبو الإصلاح (البطريرك 111)",
+                text: "رغم قصر مدة جلوسه على الكرسي (نحو 7 سنوات)، إلا أنه أحدث ثورة تطويرية شاملة نال بها لقب 'أبو الإصلاح'. آمن بأن التعليم هو أساس النهضة، فأنشأ المدارس القبطية الكبرى للبنين والبنات (أول مدارس لتعليم البنات في مصر).\n\nاشترى المطبعة المرقسية الشهيرة لطباعة الكتب الكنسية والتعليمية، وأسس المكتبة البابوية وعمل على توحيد الصفوف والتقريب بين الطوائف بروح المحبة والحكمة."
+            },
+            16: {
+                title: "البابا ديمتريوس الثاني (البطريرك 112)",
+                text: "تولى المسؤولية بعد البابا كيرلس الرابع وتابع مسيرته الإصلاحية والتعليمية بجد. عاصر عهد الخديوي إسماعيل وكانت تربطه به علاقات طيبة مبنية على الاحترام.\n\nحضر بدعوة رسمية حفل افتتاح قناة السويس الأسطوري عام 1869م ممثلاً للكنيسة القبطية، واهتم باستكمال بناء الكاتدرائية المرقسية الكبرى بالأزبكية وتطوير الأوقاف القبطية."
+            },
+            17: {
+                title: "البابا يوساب الثاني (البطريرك 115)",
+                text: "كان مطراناً لجرجا قبل البابوية ويمتلك ثقافة واسعة ومعرفة باللغات. شهد عهده طفرة تعليمية تمثلت في تأسيس 'معهد الدراسات القبطية' العريق عام 1954م ليكون مركزاً أكاديمياً وبحثياً للتراث القبطي.\n\nكذلك ازدهرت في زمانه حركة 'مدارس الأحد' بنشاط كبير جداً، والتي خرجت جيل القادة الروحيين والعلماء والبطاركة الذين قادوا نهضة الكنيسة المعاصرة لاحقاً."
+            },
+            18: {
+                title: "البابا كيرلس الخامس (البطريرك 113)",
+                text: "جلس على الكرسي المرقسي لمدة تقارب 52 عاماً و9 أشهر، وبذلك يعد صاحب أطول مدة جلوس في تاريخ بطاركة الكنيسة القبطية.\n\nشهد عهده أحداثاً وطنية كبرى مثل الثورة العرابية وثورة 1919 بجانب الزعيم سعد زغلول. أسس في زمانه الكلية الإكليريكية بالقاهرة عام 1893م لإعداد الكهنة والمفكرين، وأنشأ المدارس وتصدى للتحديات الإدارية بحكمة وثبات الأبطال."
+            },
+            19: {
+                title: "البابا مكاريوس الثالث (البطريرك 114)",
+                text: "كان مطراناً جليلاً وعالماً لمدينة أسيوط قبل اختيار للبابوية. اتسم طوال حياته بالزهد الشديد والهدوء والوقار الرهباني الأصيل.\n\nاهتم اهتماماً خاصاً بالحياة الرهبانية وإصلاح أحوال الأديرة القبطية ورفع مستواها الروحي والفكري، وترك بصمة طيبة في نفوس كل من عاصروه برقة قلبه ومحبته للسلام."
+            },
+            20: {
+                title: "البابا كيرلس السادس (البطريرك 116)",
+                text: "عُرف بـ 'رجل الصلاة والطلبة'، حيث عاش كمتوحد في طاحونة الهواء بمصر القديمة قبل اختيار للبابوية. قاد الكنيسة بروحانية عميقة وكانت القداسات اليومية محور حياته.\n\nشهد عهده أحداثاً تاريخية مجيدة منها: ظهور السيدة العذراء فوق كنائس الزيتون عام 1968م، وبناء وتأسيس الكاتدرائية المرقسية الكبرى بالعباسية، واستعادة رفات القديس مرقس الرسول من روما بعد قرون من غيابه، وتأسيس أولى كنائس المهجر."
+            },
+            21: {
+                title: "البابا شنودة الثالث (البطريرك 117)",
+                text: "مُعلم الجيل الشاعر والكاتب والمفكر. ترهب في دير السريان باسم 'أنطونيوس السرياني' وسكن في مغارة، ثم سيم كأول أسقف للتعليم المعاهد الدينية.\n\nتميز بلقائه الأسبوعي (الاجتماع العام) الذي استمر لعقود لتعليم الآلاف. شهد عهده نهضة رهبانية وعمرانية غير مسبوقة وتوسعاً كرازياً عالمياً هائلاً؛ فأنشأ مئات الكنائس والإيبارشيات والأديرة في أمريكا، أوروبا، وأستراليا، ومات وعاش وهو يرفع شعار: 'مصر وطن يعيش فينا لا وطن نعيش فيه'."
+            },
+            22: {
+                title: "البابا تواضروس الثاني (البطريرك 118)",
+                text: "درس الصيدلة وتخرج من جامعة الإسكندرية، ثم سيم راهباً بدير الأنبا بيشوي، وخدم كأثير عام ومساعد للأنبا باخوميوس بمطرانية البحيرة.\n\nاختير للكرسي المرقسي عبر القرعة الهيكلية المباركة في نوفمبر 2012م. يقود الكنيسة بروح الحكمة والعمل المؤسسي والمنظم، واهتم بتطوير المناهج الكنسية والاهتمام بالطفولة والشباب، وترسيخ العلاقات المسكونية والمحبة مع كافة كنائس العالم، ضارباً أروع الأمثلة في الحكمة والوطنية."
+            }
+        };
+
+        // دالة عرض الصفحة المحددة
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('nav button');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById('btn-' + pageId).classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // دالة فتح نافذة قصة الحياة والتحكم بمحتواها
+        function openStory(id) {
+            const modal = document.getElementById('storyModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+
+            if (stories[id]) {
+                title.innerText = stories[id].title;
+                body.innerText = stories[id].text;
+                modal.style.display = "flex";
+            }
+        }
+
+        // دالة إغلاق النافذة المنبثقة
+        function closeStory() {
+            document.getElementById('storyModal').style.display = "none";
+        }
+
+        // إغلاق النافذة تلقائياً إذا ضغط المستخدم في أي مكان خارج صندوق النص
+        window.onclick = function(event) {
+            const modal = document.getElementById('storyModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
