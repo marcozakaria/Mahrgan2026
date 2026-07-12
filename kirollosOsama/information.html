@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تاريخ بطاركة الكنيسة القبطية الأرثوذكسية</title>
+
+    <style>
+        /* تعريف المتغيرات اللونية للوضع الفاتح (الافتراضي) */
+        :root {
+            --primary-color: #722f37;
+            --accent-color: #d4af37;
+            --dark-bg: #1a1a1a;
+            --light-bg: #f9f7f5;
+            --text-dark: #2b2b2b;
+            --text-light: #ffffff;
+            --card-bg: #ffffff;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --modal-bg: #fefefe;
+            --border-color: #e0e0e0;
+            --transition-speed: 0.3s;
+        }
+
+        /* تعريف المتغيرات اللونية للوضع الليلي */
+        body.dark-mode {
+            --light-bg: #121212;
+            --text-dark: #f1f1f1;
+            --card-bg: #1e1e1e;
+            --card-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+            --modal-bg: #2a2a2a;
+            --border-color: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* تحسين شريط التمرير */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        header {
+            background: linear-gradient(rgba(114, 47, 55, 0.9), rgba(114, 47, 55, 0.95)),
+                url('https://upload.wikimedia.org/wikipedia/commons/d/d9/Coptic_Cross_Pattern.jpg') center/cover;
+            color: #ffffff;
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom: 5px solid var(--accent-color);
+            position: relative;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+            transition: background var(--transition-speed);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .controls-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 30px;
+            font-size: 1rem;
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+            transition: all var(--transition-speed) ease;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(114, 47, 55, 0.3);
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border-color: var(--primary-color);
+        }
+
+        .patriarchs-grid {
+            max-width: 1200px;
+            margin: 0 auto 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 20px;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            display: none;
+            border: 1px dashed var(--primary-color);
+        }
+
+        .patriarch-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .patriarch-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 20px;
+            position: relative;
+            text-align: center;
+        }
+
+        .badge-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent-color);
+            color: #1a1a1a;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .card-header h2 {
+            font-size: 1.4rem;
+            margin-top: 10px;
+        }
+
+        .card-header .title-era {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .patriarch-img-container {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background-color: var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .patriarch-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: var(--card-bg);
+            transition: transform 0.5s ease;
+        }
+
+        .patriarch-card:hover .patriarch-img {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .info-row {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .bio-text {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: justify;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 10px;
+            opacity: 0.85;
+        }
+
+        .card-footer {
+            background-color: rgba(0, 0, 0, 0.02);
+            padding: 15px 25px;
+            border-top: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        body.dark-mode .card-footer {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .more-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: color var(--transition-speed);
+        }
+
+        .more-link:hover {
+            color: var(--accent-color);
+        }
+
+        /* تحسينات النافذة المنبثقة */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+        }
+
+        .modal-content {
+            background-color: var(--modal-bg);
+            color: var(--text-dark);
+            margin: auto;
+            padding: 30px;
+            border-top: 6px solid var(--primary-color);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 50px;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px) scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color var(--transition-speed);
+        }
+
+        .close-btn:hover {
+            color: var(--primary-color);
+        }
+
+        #modalTitle {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        #modalImg {
+            width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: block;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+        }
+
+        #modalBody {
+            font-size: 1.05rem;
+            text-align: justify;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        footer {
+            background-color: #1a1a1a;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 4px solid var(--primary-color);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .controls-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .filter-tags {
+                justify-content: center;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                left: 10px;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <button class="theme-toggle" id="themeToggle">🌙 الوضع الداكن</button>
+        <h1>سجل آباء بطاركة الكنيسة القبطية الأرثوذكسية</h1>
+        <p>مستعرض تاريخي موسع يعرض سيرة وبطولات آباء الكرسي الرسولي الإسكندري عبر العصور</p>
+    </header>
+
+    <div class="controls-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="ابحث عن البطريرك بالاسم، الرقم، اللقب، أو أحداث السيرة...">
+        </div>
+        <div class="filter-tags">
+            <button class="filter-btn active" data-era="all">الكل</button>
+            <button class="filter-btn" data-era="rasoly">العصر الرسولي</button>
+            <button class="filter-btn" data-era="majame">عصر المجامع</button>
+            <button class="filter-btn" data-era="waseet">العصر الوسيط</button>
+            <button class="filter-btn" data-era="hadeeth">العصر الحديث</button>
+        </div>
+    </div>
+
+    <main class="patriarchs-grid" id="patriarchsGrid">
+
+        <div class="no-results" id="noResultsMsg">لا توجد نتائج مطابقة لبحثك. يرجى المحاولة بكلمات أخرى.</div>
+
+        <article class="patriarch-card" data-era="rasoly">
+            <div class="card-header">
+                <span class="badge-number">1</span>
+                <h2>القديس مار مرقس الرسول</h2>
+                <span class="title-era">العصر الرسولي والتأسيس</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/FGrGkfh/morcos.jpg" alt="morcos" class="patriarch-img" border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 61 م - 68 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> كاروز الديار المصرية</div>
+                <p class="bio-text">أحد السبعين رسولاً وكاتب إنجيل مرقس. هو مؤسس الكنيسة القبطية وأول بطاركة الكرسي
+                    الإسكندري.</p>
+                <div class="full-story" style="display:none;">
+                    ولد القديس مرقس في القيروان (ليبيا الحالية) من أبوين يهوديين، ثم انتقلت عائلته إلى أورشليم. كان بيته
+                    هو "العليّة" التي أكل فيها السيد المسيح الفصح مع تلاميذه وحل فيها الروح القدس. جاء إلى الإسكندرية
+                    حوالي عام 61 م، وبدأ كرازته بمعجزة شفاء يد الإسكافي إنيانوس. أسس مدرسة الإسكندرية اللاهوتية لمواجهة
+                    الفكر الوثني. نال إكليل الشهادة في ليلة عيد القيامة عام 68 م بعد أن جره الوثنيون في شوارع
+                    الإسكندرية، وظل جسده ورأسه ينبوع بركة للكنيسة عبر الأجيال.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="rasoly">
+            <div class="card-header">
+                <span class="badge-number">2</span>
+                <h2>البابا إنيانوس</h2>
+                <span class="title-era">العصر الرسولي والتأسيس</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/VYyYPZ6z/4-1.png" alt="4 1" class="patriarch-img" border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 68 م - 83 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> أول المؤمنين في مصر</div>
+                <p class="bio-text">كان إسكافياً أصلح حذاء مار مرقس وجُرحت إصبعه فشفاه الرسول. آمن وأصبح بيته أول كنيسة
+                    بمصر.</p>
+                <div class="full-story" style="display:none;">
+                    البابا إنيانوس هو البطريرك الثاني للكرسي المرقسي. تبدأ قصته عندما كان يعمل إسكافياً في الإسكندرية،
+                    ودخل إليه القديس مرقس لإصلاح حذائه، فاخترق المخفز إصبع إنيانوس فصرخ باليونانية "إيس ثيوس" (يا الله
+                    الواحد). حينها تفل مار مرقس على الأرض وصنع طيناً عنه ودهن به إصبعه فبرئ في الحال. فتحت هذه المعجزة
+                    الباب لإنيانوس وعائلته لسماع بشارة الإنجيل فآمنوا واعتمدوا. رسمه القديس مرقس أسقفاً على الإسكندرية
+                    ليدير شؤون الكنيسة، وخلفه بعد استشهاده ليقود الكنيسة لمدة 15 عاماً تميزت بالسلام والنمو الرعوي.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="rasoly">
+            <div class="card-header">
+                <span class="badge-number">3</span>
+                <h2>البابا ميليوس الأول</h2>
+                <span class="title-era">العصر الرسولي والتأسيس</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/0RBx8Jyr/images.jpg" alt="images" class="patriarch-img" border="0"></a>
+
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 83 م - 95 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> البطريرك الغيور</div>
+                <p class="bio-text">ثالث بطاركة الإسكندرية، عاصر اضطهاد الإمبراطور دوميتيان وثبّت المؤمنين بروح الشجاعة
+                    والوداعة.</p>
+                <div class="full-story" style="display:none;">
+                    البابا ميليوس (أو أفريليوس) انتُخب بطريركاً بإجماع الآراء بعد نياحة البابا إنيانوس في عهد الإمبراطور
+                    الروماني دوميتيان. تميزت حبريته بالغيرة الشديدة على الإيمان، فكان يطوف بين المؤمنين يثبتهم ويسندهم
+                    في فترات الاضطهاد العنيفة. نجح في جذب الكثير من الوثنيين إلى الإيمان المسيحي بفضل قداسة سيرته
+                    وخطاباته المؤثرة. قاد الكنيسة باقتدار لمدة اثنتي عشرة سنة وتنيح بسلام.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="rasoly">
+            <div class="card-header">
+                <span class="badge-number">6</span>
+                <h2>البابا يسطس</h2>
+                <span class="title-era">العصر الرسولي والتأسيس</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/0pkQkq6g/11.jpg" alt="11" class="patriarch-img" border="0"></a><br /><a
+                    target='_blank' href='https://imgbb.com/'></a><br />
+
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 118 م - 129 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> الفيلسوف المضيء</div>
+                <p class="bio-text">كان رئيساً للمدرسة اللاهوتية قبل اختيار، وامتاز بعلمه الغزير وحبه الكبير للفقراء
+                    والوعظ والتوجيه.</p>
+                <div class="full-story" style="display:none;">
+                    كان البابا يسطس رجلاً فاضلاً عالماً، قبل سيامته تولى رئاسة مدرسة الإسكندرية اللاهوتية (التي أسسها
+                    مار مرقس) نظراً لتعمقه الشديد في الفلسفة والعلوم الدينية. نال ثقة الشعب والكهنة فتم اختياره للكرسي
+                    المرقسي ليكون البطريرك السادس. اهتم في حبريته برعاية الشعب وتعميد الوثنيين، والوعظ المستمر، وتخريج
+                    جيل من العلماء القادرين على محاججة الفلاسفة الوثنيين. تنيح بسلام بعد أن قضى 10 سنوات في الخدمة.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="rasoly">
+            <div class="card-header">
+                <span class="badge-number">12</span>
+                <h2>البابا ديمتريوس الكرام</h2>
+                <span class="title-era">العصر الرسولي والتأسيس</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/j9Lgj712/images-1.jpg" alt="images 1" class="patriarch-img" border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 188 م - 230 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> واضع حساب الأبقطي</div>
+                <p class="bio-text">هو واضع "حساب الأبقطي" الخاص بحساب موعد عيد القيامة المجيد عالمياً، واهتم بمدرسة
+                    الإسكندرية اللاهوتية.</p>
+                <div class="full-story" style="display:none;">
+                    كان البابا ديمتريوس فلاحاً بسيطاً يعتني بكروم العنب، وكان يعيش مع زوجته حياة البتولية كاملة دون أن
+                    يعرف أحد. رأى البابا يوليانوس قبل وفاته رؤيا تخبره بأن من يدخل عليه بعنقود عنب في غير أوانه سيكون
+                    البطريرك القادم، فكان ديمتريوس. وهبه الله حكمة عليا، فصاغ "حساب الأبقطي" الفلكي الدقيق الذي استندت
+                    إليه الكنائس العالمية لتحديد موعد موحد لعيد القيامة المجيد. قاد الكنيسة بنجاح لمدة 42 عاماً وعاصر
+                    العلامة أوريجانوس.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="rasoly">
+            <div class="card-header">
+                <span class="badge-number">13</span>
+                <h2>البابا ياروكلاس (ياركلا)</h2>
+                <span class="title-era">العصر الرسولي والتأسيس</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/20HFLP0c/images-2.jpg" alt="images 2" class="patriarch-img"  border="0"></a>
+            
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 232 م - 247 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> أول من دُعي "بابا"</div>
+                <p class="bio-text">تلميذ العلامة أوريجانوس ورئيس المدرسة اللاهوتية، وهو أول بطريرك في التاريخ يُطلق
+                    عليه لقب "بابا".</p>
+                <div class="full-story" style="display:none;">
+                    البابا ياروكلاس كان فيلسوفاً وثنياً درس الفلسفة اليونانية ثم آمن بالمسيحية على يد القديس ديمتريوس.
+                    أصبح تلميذاً بارزاً في المدرسة اللاهوتية ثم رئيساً لها. امتاز بجهوده العظيمة في التعليم، ونظراً
+                    لمحبته الأبوية وتقدير الأساقفة له، كانوا يدعونه باليونانية "بّابّا" (Papas) وتعني الأب، فكان أول
+                    بطريرك في العالم يحمل هذا اللقب قبل روما بقرون طويلة. عاصر اضطهاداً شديداً وتنيح بسلام بعد حبرية
+                    دامت 15 سنة.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <!-- الإضافة الجديدة: البابا بطرس الأول -->
+        <article class="patriarch-card" data-era="rasoly">
+            <div class="card-header">
+                <span class="badge-number">17</span>
+                <h2>البابا بطرس الأول</h2>
+                <span class="title-era">العصر الرسولي والتأسيس</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/9k5rJX3N/images-12.jpg" alt="images 12" class="patriarch-img"  border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 302 م - 311 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> خاتم الشهداء</div>
+                <p class="bio-text">آخر من استشهد في عصر الاضطهاد الدقلدياني العظيم، ورفض بشدة هرطقة آريوس قبل استشهاده.
+                </p>
+                <div class="full-story" style="display:none;">
+                    البابا بطرس الأول هو البطريرك السابع عشر. عاصر أشد عصور الاضطهاد تحت حكم الإمبراطور دقلديانوس. قاد
+                    الكنيسة من المخابئ وكان يشجع المؤمنين على الثبات. ظهر له السيد المسيح في رؤيا مشقوق الثياب، وعندما
+                    سأله من شق ثيابك، أجابه "آريوس". حذر الكنيسة من آريوس ورفض قبوله. قُطع رأسه عام 311 م ليكون "خاتم
+                    الشهداء" وتُختتم به حقبة الاستشهاد الكبرى، لتبدأ الكنيسة عهداً جديداً.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="majame">
+            <div class="card-header">
+                <span class="badge-number">20</span>
+                <h2>البابا أثناسيوس الرسولي</h2>
+                <span class="title-era">عصر المجامع وحماة الإيمان</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/gFB3kwF8/image.jpg" alt="١"  class="patriarch-img" border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 328 م - 373 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> حامي الإيمان / ضد العالم</div>
+                <p class="bio-text">البطل الذي واجه الآريوسية في مجمع نيقية وهو شماس. نُفي عن كرسيه خمس مرات وقيل عنه
+                    "العالم كله ضدك".</p>
+                <div class="full-story" style="display:none;">
+                    يُعد القديس أثناسيوس صخرة الإيمان الأرثوذكسي العالمي. واجه بدعة آريوس في مجمع نيقية عام 325 م وصاغ
+                    قانون الإيمان المسيحي. بعد جلسوه على الكرسي، واجه اضطهاداً مريرًا من سبعة أباطرة، ونُفي عن كرسيه 5
+                    مرات متفرقة، وقضى سنوات يتنقل متخفياً بين أديرة رهبان الصعيد ومخابئ أوروبا. صموده الأسطوري في الدفاع
+                    عن لاهوت المسيح جعل العالم يطلق عليه اللقب التاريخي "أثناسيوس ضد العالم" (Athanasius contra mundum).
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="majame">
+            <div class="card-header">
+                <span class="badge-number">24</span>
+                <h2>البابا كيرلس الأول</h2>
+                <span class="title-era">عصر المجامع وحماة الإيمان</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/QWmGdPS/image.jpg" alt="٢" class="patriarch-img" border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 412 م - 444 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> عمود الدين</div>
+                <p class="bio-text">رئيس مجمع أفسس المسكوني الثالث، دافع بقوة عن لقب العذراء "ثيؤطوكوس" (والدة الإله) ضد
+                    بدعة نسطور.</p>
+                <div class="full-story" style="display:none;">
+                    تزعم الحركة اللاهوتية الدفاعية في القرن الخامس ضد بدعة نسطور بطريرك القسطنطينية، الذي نادى بالفصل
+                    بين طبيعتي المسيح وأنكر تسمية العذراء بـ"والدة الإله". ترأس البابا كيرلس مجمع أفسس المسكوني عام 431
+                    م وصاغ مقدمة قانون الإيمان "نعظمك يا أم النور الحقيقي..". ترك إرثاً ضخماً من الكتب اللاهوتية
+                    والتفاسير واستحق لقب "عمود الدين ومصباح الكنيسة الأرثوذكسية".
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="majame">
+            <div class="card-header">
+                <span class="badge-number">25</span>
+                <h2>البابا ديوسقورس الأول</h2>
+                <span class="title-era">عصر المجامع وحماة الإيمان</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/8y4Z27J/image.jpg" alt="٣" class="patriarch-img" border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 444 م - 454 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> بطل الأرثوذكسية المظلوم</div>
+                <p class="bio-text">دافع عن صيغة القديس كيرلس للطبيعة الواحدة للكلمة المتجسد في مجمع خلقيدونية، ونُفي
+                    مستشهداً في جزيرة غنغرا.</p>
+                <div class="full-story" style="display:none;">
+                    خلف القديس كيرلس الكبير وعاصر اضطرابات عقائدية كبرى. وقف بصلابة في مجمع خلقيدونية عام 451 م أمام
+                    محاولات تقسيم المسيح إلى طبيعتين بعد اتحاد، متمسكاً بعبارة كيرلس "طبيعة واحدة للكلمة المتجسد". تعرض
+                    لمؤامرة سياسية وعقائدية أدت إلى عزله ونفيه إلى جزيرة "غنغرا" البعيدة، حيث تعرض للتعذيب وكسروا أسنانه
+                    ونتفوا لحيته، لكنه ظل ثابتاً صامداً حتى استشهاده في المنفى، وتعتبره الكنيسة القبطية بطل الإيمان
+                    الأول.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="majame">
+            <div class="card-header">
+                <span class="badge-number">26</span>
+                <h2>البابا تيموثاوس الثاني</h2>
+                <span class="title-era">عصر المجامع وحماة الإيمان</span>
+            </div>
+            <div class="patriarch-img-container">
+               <img src="https://i.ibb.co/fGnhf88q/image.jpg" alt="٤" class="patriarch-img" border="0"></a>
+                
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 457 م - 477 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> حبيب الشعب / الرافض لخلقيدونية</div>
+                <p class="bio-text">تلميذ البابا ديوسقورس، اختاره الشعب سرًا واحتمل النفي من أجل الحفاظ على استقلال
+                    الإيمان القبطي.</p>
+                <div class="full-story" style="display:none;">
+                    البابا تيموثاوس الثاني (المعلق بلقب سالوفاكيولوس) كان راهباً فاضلاً رافق ديوسقورس. بعد نفي ديوسقورس،
+                    رفض الأقباط الاعتراف بالبطريرك الدخيل المعين من قبل الإمبراطور الروماني، وقاموا برسم تيموثاوس سراً.
+                    نُفي لاحقاً لمدة سبع سنوات إلى ليبيا بسبب رفضه قرارات خلقيدونية، وتولى قيادة الكنيسة بروح الرعاية
+                    العميقة وسط أمواج الاضطهاد العاتية حتى أعاده الإمبراطور باسيلكس إلى كرسيه بكرامة وتنيح بسلام.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="waseet">
+            <div class="card-header">
+                <span class="badge-number">38</span>
+                <h2>البابا بنيامين الأول</h2>
+                <span class="title-era">العصر الإسلامي والوسيط</span>
+            </div>
+            <div class="patriarch-img-container">
+               <img src="https://i.ibb.co/ZRnj9Z6R/images-3.jpg" alt="images 3" class="patriarch-img" border="0"></a>
+                
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 626 م - 662 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> بطريرك الصمود والتعمير</div>
+                <p class="bio-text">عاصر دخول الإسلام إلى مصر. عانى من اضطهاد المقوقس واختبأ 13 سنة، ثم أعاده عمرو بن
+                    العاص لأمان كرسيه.</p>
+                <div class="full-story" style="display:none;">
+                    قضى 13 عاماً متخفياً في براري الصعيد هرباً من بطش البيزنطيين بقيادة المقوقس. وبعد الفتح الإسلامي
+                    لمصر عام 641 م، أصدر القائد عمرو بن العاص كتاب أمان مشهور يدعوه فيه للعودة ليرعى شعبه بأمان. عاد
+                    البابا وبدأ رحلة تعمير جبارة للأديرة والكنائس وبخاصة دير أنبا مقار بوادي النطرون، ونظم شؤون الكنيسة
+                    بعد عقود من الانهيار والنهب الروماني.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="waseet">
+            <div class="card-header">
+                <span class="badge-number">43</span>
+                <h2>البابا ألكسندروس الثاني</h2>
+                <span class="title-era">العصر الإسلامي والوسيط</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/tMsvjKyp/images-4.jpg" alt="images 4" class="patriarch-img" border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 704 م - 729 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> الصابر المحب</div>
+                <p class="bio-text">احتمل ضيقات شديدة وضرائب باهظة فرضها الولاة الأمويون، وقاد الكنيسة بحكمة ووداعة
+                    فائقة لحماية الأقباط.</p>
+                <div class="full-story" style="display:none;">
+                    عاش البابا ألكسندروس الثاني في فترة قاسية فرض فيها الولاة (مثل أسامة بن زيد وقرة بن شريك) ضرائب
+                    تعجيزية ومصادرات واسعة على الكنائس والرهبان. قُبض على البابا عدة مرات وطيف به طلباً للمال، ولكنه
+                    واجه كل هذا بصلوات دافئة وصبر عجيب. كان يجمع المساعدات لمساندة العائلات الفقيرة والرهبان الجائعين.
+                    امتاز بعلاقة محبة قوية مع شعبه حتى تنيح بسلام بعد 24 سنة من الجهاد.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="waseet">
+            <div class="card-header">
+                <span class="badge-number">67</span>
+                <h2>البابا كيرلس الثاني</h2>
+                <span class="title-era">العصر الإسلامي والوسيط</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/NgC83x1G/images-5.jpg" alt="images 5" class="patriarch-img" border="0"></a>
+                
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 1078 م - 1092 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> المصلح القانوني</div>
+                <p class="bio-text">عاصر الدولة الفاطمية والوزير بدر الجمالي، واشتهر بوضع القوانين الكنسية الصارمة
+                    وتنظيم الطقوس.</p>
+                <div class="full-story" style="display:none;">
+                    كان ناسكاً متوحداً في صومعة ببرية شيهيت قبل اختياره. نقل مقر الكرسي المرقسي رسمياً من الإسكندرية إلى
+                    كنيسة المعلقة بمصر القديمة بطلب من الوزير الفاطمي بدر الجمالي ليكون قريباً من مركز الحكم. وضع البابا
+                    كيرلس الثاني 34 قانوناً كنسياً شهيراً لتنظيم شؤون المواريث والزيجات والحد من السيمونية (بيع الرتب
+                    الكنسية)، وكان رجل دولة يحظى باحترام الخلفاء الفاطميين.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="waseet">
+            <div class="card-header">
+                <span class="badge-number">70</span>
+                <h2>البابا غبريال الثاني (ابن تريك)</h2>
+                <span class="title-era">العصر الإسلامي والوسيط</span>
+            </div>
+            <div class="patriarch-img-container">
+               <img src="https://i.ibb.co/Y4CPjDLL/images-6.jpg" alt="images 6" class="patriarch-img" border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 1131 م - 1145 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> الكاتب المنظم / المترجم</div>
+                <p class="bio-text">كان كاتباً مشهوراً في الحصن الروماني، واهتم بنسخ الكتب وترجمة الصلوات للغة العربية
+                    لتسهيل الفهم للجمهور.</p>
+                <div class="full-story" style="display:none;">
+                    كان عالماً ناسخاً بارعاً ويعمل كاتباً للحكومة الفاطمية قبل سيامته. قام بثورة إصلاحية داخل الكنيسة؛
+                    حيث ألزم الكنائس بقراءة الأناجيل والصلوات باللغة العربية بعد قراءتها بالقبطية ليتمكن الشعب من فهم
+                    العقيدة بعد انتشار العربية في مصر. أعاد تنظيم طقوس أسبوع الآلام (البصخة) وجمع ترتيبها في كتاب واحد،
+                    ومنع تقديم القرابين والوظائف الدينية مقابل المال تماماً.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <!-- الإضافة الجديدة: البابا متاؤس الأول -->
+        <article class="patriarch-card" data-era="waseet">
+            <div class="card-header">
+                <span class="badge-number">87</span>
+                <h2>البابا متاؤس الأول</h2>
+                <span class="title-era">العصر الإسلامي والوسيط</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/v6Qw8ccR/images-13.jpg" alt="images 13" class="patriarch-img" border="0"></a>
+                
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 1378 م - 1408 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> المسكين / صانع العجائب</div>
+                <p class="bio-text">اشتهر بالنسك الشديد ومحبة الفقراء، وعاصر السلطان برقوق الذي كان يكن له احتراماً
+                    شديداً.</p>
+                <div class="full-story" style="display:none;">
+                    كان يُعرف بـ "متاؤس المسكين" لشدة نسكه وتواضعه. هرب من الرسامة عدة مرات حتى أُجبر عليها. تميزت
+                    حبريته بعمل المعجزات وروح النبوة. كان يخدم الفقراء بنفسه ويغسل أرجلهم. ارتبط بعلاقة صداقة واحترام
+                    متبادل مع السلطان الظاهر برقوق، مما ساعد في رفع الكثير من المظالم عن الأقباط. قاد الكنيسة بحكمة وعمق
+                    روحي لمدة 30 عاماً وكان ملاذاً للجميع في أوقات الشدة.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="waseet">
+            <div class="card-header">
+                <span class="badge-number">103</span>
+                <h2>البابا يؤانس التاسع عشر</h2>
+                <span class="title-era">العصر الإسلامي والوسيط</span>
+            </div>
+            <div class="patriarch-img-container">
+               <img src="https://i.ibb.co/cBsWy7b/images-7.jpg" alt="images 7" class="patriarch-img" border="0"></a>
+                
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 1676 م - 1718 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> بطريرك العمر الطويل</div>
+                <p class="bio-text">قاد الكنيسة القبطية في العصر العثماني لأكثر من 42 عاماً تميزت بالحفاظ على الأوقاف
+                    وترميم الكنائس القديمة.</p>
+                <div class="full-story" style="display:none;">
+                    عاش وعمل في فترة معقدة من تاريخ مصر تحت الحكم العثماني، تميز بمهارة إدارية ممتازة مكنته من حماية
+                    أوقاف الأديرة وتجديد كنيسة العذراء بحارة الروم وكنيسة حارة زويلة. قام برحلات رعوية امتدت لكل أقاليم
+                    مصر لتفقد الرعية وتثبيت الإيمان وتأمين العائلات الفقيرة من عسف المماليك. حظيت الكنيسة في عهده الطويل
+                    بنوع من الاستقرار الرعوي النسبي.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <!-- الإضافة الجديدة: البابا بطرس السابع (الجولي) -->
+        <article class="patriarch-card" data-era="hadeeth">
+            <div class="card-header">
+                <span class="badge-number">109</span>
+                <h2>البابا بطرس السابع</h2>
+                <span class="title-era">العصر الحديث والمعاصر</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/RT6N882R/images-14.jpg" alt="images 14" class="patriarch-img" border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 1809 م - 1852 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> الجولي</div>
+                <p class="bio-text">عاصر محمد علي باشا، ورفض الحماية الروسية للأقباط قائلاً مقولته الشهيرة: "نحن في
+                    حماية ملك لا يموت".</p>
+                <div class="full-story" style="display:none;">
+                    يُعرف بالبابا بطرس الجولي. قاد الكنيسة في عهد محمد علي باشا مؤسس مصر الحديثة. من أشهر مواقفه
+                    التاريخية والوطنية حين عرض عليه السفير الروسي وضع الأقباط تحت حماية قيصر روسيا، فسأله البابا: "هل
+                    يعيش إمبراطوركم إلى الأبد؟" فأجاب السفير بالنفي، فقال البابا: "نحن إذن في حماية ملك لا يموت". أثار
+                    هذا الموقف الوطني إعجاب محمد علي باشا وزاد من مكانة البابا لديه، وعاشت الكنيسة في عهده في سلام كبير.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="hadeeth">
+            <div class="card-header">
+                <span class="badge-number">110</span>
+                <h2>البابا كيرلس الرابع</h2>
+                <span class="title-era">العصر الحديث والمعاصر</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/gMTMWYNb/images-8.jpg" alt="images 8" class="patriarch-img" border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 1854 م - 1861 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> أبو الإصلاح</div>
+                <p class="bio-text">أحدث نهضة تعليمية كبرى؛ فأسس مدارس لتعليم البنين والبنات، واشترى ثاني مطبعة في تاريخ
+                    مصر.</p>
+                <div class="full-story" style="display:none;">
+                    رغم قصر مدة جلوسه (7 سنوات)، إلا أنه استحق لقب "أبو الإصلاح". آمن بأن التعليم هو قاطرة التقدم، فأنشأ
+                    المدرسة القبطية الكبرى بالدرب الواسع وأمر بفتح فصول مخصصة لتعليم البنات لأول مرة في تاريخ مصر
+                    الحديثة. اشترى مطبعة فرنسية كبرى لطباعة الكتب المدرسية والدينية، واستقبلها بموكب حافل بالشموع إعلاء
+                    لقيمة العلم والآداب.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="hadeeth">
+            <div class="card-header">
+                <span class="badge-number">112</span>
+                <h2>البابا كيرلس الخامس</h2>
+                <span class="title-era">العصر الحديث والمعاصر</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/JFKXNBZC/6.jpg" alt="6" class="patriarch-img" border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 1874 م - 1927 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> أطول البابوات جلوساً</div>
+                <p class="bio-text">جلس على الكرسي المرقسي لمدة 52 عاماً و9 أشهر! عاصر الخديوي إسماعيل، والثورة
+                    العرابية، وثورة 1919.</p>
+                <div class="full-story" style="display:none;">
+                    هو صاحب أطول فترة حبرية في تاريخ الكنيسة القبطية. شهد عهده تحولات سياسية هائلة في مصر، وكان داعماً
+                    قوياً للثورة العرابية وثورة 1919، ومؤيداً لشعار "يحيا الهلال مع الصليب" وصديقاً مقرباً للزعيم سعد
+                    زغلول. أسس في عهده الكلية الإكليريكية الشهيرة بقيادة القديس حبيب جرجس، وبدأت النهضة التعليمية
+                    الحديثة والمدارس الأحدية في ربوع القطر المصري، ورمم مئات الكنائس والأديرة.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <!-- الإضافة الجديدة: البابا مكاريوس الثالث -->
+        <article class="patriarch-card" data-era="hadeeth">
+            <div class="card-header">
+                <span class="badge-number">114</span>
+                <h2>البابا مكاريوس الثالث</h2>
+                <span class="title-era">العصر الحديث والمعاصر</span>
+            </div>
+            <div class="patriarch-img-container">
+               <img src="https://i.ibb.co/wZhJh3Ky/9.jpg" alt="9" class="patriarch-img" border="0"></a>
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 1944 م - 1945 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> الحمامة الحسنة</div>
+                <p class="bio-text">قاد الكنيسة لفترة قصيرة جداً، وكان مطراناً لأسيوط قبلها، واشتهر بالوداعة والقداسة
+                    وإصدار الوثيقة التاريخية.</p>
+                <div class="full-story" style="display:none;">
+                    كان مطراناً لأسيوط لمدة 47 عاماً قبل أن يُرسم بطريركاً. عُرف بالوداعة الشديدة وأُطلق عليه لقب
+                    "الحمامة الحسنة". رغم قصر فترة حبريته (حوالي عام ونصف فقط)، إلا أنه ترك بصمة هامة حين أصدر وثيقة
+                    تاريخية للمطالبة بحقوق الأقباط وإصلاح الشؤون الكنسية، ودخل في صراع مع المجلس الملي من أجل الحفاظ على
+                    القوانين الكنسية. تنيح تاركاً سيرة عطرة من النسك والصلاة.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="hadeeth">
+            <div class="card-header">
+                <span class="badge-number">116</span>
+                <h2>البابا كيرلس السادس</h2>
+                <span class="title-era">العصر الحديث والمعاصر</span>
+            </div>
+            <div class="patriarch-img-container">
+               <img src="https://i.ibb.co/CsMQVhDv/images-9.jpg" alt="images 9" class="patriarch-img" border="0"></a>
+                
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 1959 م - 1971 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> رجل الصلاة والمعجزات</div>
+                <p class="bio-text">تميز عهده بالنهضة الروحية الكبيرة وتعمير دير مارمينا. تم في عهده إرجاع رفات مار مرقس
+                    وظهور العذراء بالزيتون.</p>
+                <div class="full-story" style="display:none;">
+                    كان يعيش راهباً متوحداً في طاحونة بمصر القديمة. تميز عصره بصلة روحية بالقداسات اليومية. نجح في بناء
+                    الكاتدرائية المرقسية بالعباسية وافتتحها بمشاركة الرئيس جمال عبد الناصر عام 1968 م، وهو العام الذي
+                    شهد الحدث التاريخي الأبرز وهو ظهور السيدة العذراء بالزيتون، واستعاد رفات القديس مرقس الرسول من روما
+                    بعد قرون من سرقته. اعترف المجمع المقدس بقدسيته عام 2013.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="hadeeth">
+            <div class="card-header">
+                <span class="badge-number">117</span>
+                <h2>البابا شنودة الثالث</h2>
+                <span class="title-era">العصر الحديث والمعاصر</span>
+            </div>
+            <div class="patriarch-img-container">
+                <img src="https://i.ibb.co/WpGz3Zft/images-10.jpg" alt="images 10" class="patriarch-img" border="0"></a>
+                
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 1971 م - 2012 م</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> معلم الأجيال / بابا العرب</div>
+                <p class="bio-text">قاد الكنيسة لأكثر من 40 عاماً اتسمت بالتعليم الغزير والاجتماع الأسبوعي وتأسيس
+                    إيبارشيات المهجر عالمياً.</p>
+                <div class="full-story" style="display:none;">
+                    قاد الكنيسة في ظروف سياسية دقيقة ومثيرة. تميز بالتعليم الغزير والوعظ الفصيح وألقى محاضرة الأربعاء
+                    لآلاف الحاضرين على مدار 40 سنة، وألف 150 كتاباً. شهد عهده طفرة هائلة في تأسيس إيبارشيات وكنائس قبطية
+                    في أمريكا، أوروبا وأستراليا لربط أبناء المهجر بالوطن. نال لقب "بابا العرب" لمواقفه الوطنية القومية
+                    الصارمة تجاه القضية الفلسطينية ورفضه دخول القدس بدون المسلمين.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+        <article class="patriarch-card" data-era="hadeeth">
+            <div class="card-header">
+                <span class="badge-number">118</span>
+                <h2>البابا تواضروس الثاني</h2>
+                <span class="title-era">العصر الحديث والمعاصر</span>
+            </div>
+            <div class="patriarch-img-container">
+               <img src="https://i.ibb.co/bMs41YDj/images-11.jpg" alt="images 11" class="patriarch-img" border="0"></a>
+               
+            </div>
+            <div class="card-body">
+                <div class="info-row"><span class="info-label">فترة الجلوس:</span> 2012 م - حتى الآن</div>
+                <div class="info-row"><span class="info-label">اللقب:</span> بابا المحبة والسلام</div>
+                <p class="bio-text">يركز على العمل الرعوي، والتعليمي، ومؤسس أسبوع الصلاة والتقارب المسكوني مع كافة كنائس
+                    العالم.</p>
+                <div class="full-story" style="display:none;">
+                    تخرج من كلية الصيدلة ثم سيم راهباً بدير الأنبا بيشوي، واختير بالقرعة الهيكلية عام 2012. قاد الكنيسة
+                    بحكمة بالغة في مرحلة سياسية وأمنية صعبة في مصر، واشتهر بمقولته التاريخية "وطن بلا كنائس أفضل من
+                    كنائس بلا وطن" لإرساء السلم المجتمعي. يركز البابا تواضروس على التطوير الإداري والمؤسسي والتعليمي،
+                    والاهتمام بقطاع الطفولة والشباب، وتنشيط الروابط المسكونية مع كافة كنائس العالم لتعزيز الوحدة.
+                </div>
+            </div>
+            <div class="card-footer"><a class="more-link">قراءة السيرة الكاملة ←</a></div>
+        </article>
+
+    </main>
+
+    <!-- هيكل النافذة المنبثقة التفاعلية -->
+    <div id="storyModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <span class="close-btn" aria-label="إغلاق">&times;</span>
+            <h2 id="modalTitle">اسم البطريرك</h2>
+            <img id="modalImg" src="" alt="صورة البطريرك"
+                onerror="this.src='https://via.placeholder.com/700x350?text=صورة+غير+متاحة'">
+            <div id="modalInfo"></div>
+            <hr style="margin: 15px 0; border: 0; border-top: 1px dashed var(--border-color);">
+            <p id="modalBody">السيرة الكاملة تظهر هنا...</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>موقع تاريخ بطاركة الكنيسة القبطية الأرثوذكسية © 2026 - جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const patriarchCards = document.querySelectorAll('.patriarch-card');
+            const noResultsMsg = document.getElementById('noResultsMsg');
+
+            const modal = document.getElementById('storyModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalImg = document.getElementById('modalImg');
+            const modalInfo = document.getElementById('modalInfo');
+            const modalBody = document.getElementById('modalBody');
+            const closeBtn = document.querySelector('.close-btn');
+
+            const themeToggleBtn = document.getElementById('themeToggle');
+
+            let currentEra = 'all';
+            let searchQuery = '';
+
+            // تفعيل الوضع الليلي
+            themeToggleBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    themeToggleBtn.textContent = '☀️ الوضع الفاتح';
+                } else {
+                    themeToggleBtn.textContent = '🌙 الوضع الداكن';
+                }
+            });
+
+            // فلترة البطاقات
+            function filterPatriarchs() {
+                let visibleCount = 0;
+
+                patriarchCards.forEach(card => {
+                    const name = card.querySelector('h2').textContent.toLowerCase();
+                    const bio = card.querySelector('.bio-text').textContent.toLowerCase();
+                    const fullStory = card.querySelector('.full-story').textContent.toLowerCase();
+                    const cardEra = card.getAttribute('data-era');
+
+                    const matchesSearch = name.includes(searchQuery) || bio.includes(searchQuery) || fullStory.includes(searchQuery);
+                    const matchesEra = (currentEra === 'all') || (cardEra === currentEra);
+
+                    if (matchesSearch && matchesEra) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // إظهار أو إخفاء رسالة "لا توجد نتائج"
+                if (visibleCount === 0) {
+                    noResultsMsg.style.display = 'block';
+                } else {
+                    noResultsMsg.style.display = 'none';
+                }
+            }
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    currentEra = button.getAttribute('data-era');
+                    filterPatriarchs();
+                });
+            });
+
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase().trim();
+                filterPatriarchs();
+            });
+
+            // فتح النافذة المنبثقة
+            patriarchCards.forEach(card => {
+                const moreLink = card.querySelector('.more-link');
+                moreLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    const name = card.querySelector('h2').textContent;
+                    const infoRows = card.querySelectorAll('.info-row');
+                    const fullStory = card.querySelector('.full-story').innerHTML;
+                    const imgSrc = card.querySelector('.patriarch-img').src;
+
+                    modalTitle.textContent = name;
+                    modalImg.src = imgSrc;
+                    modalBody.innerHTML = fullStory;
+
+                    modalInfo.innerHTML = '';
+                    infoRows.forEach(row => {
+                        modalInfo.innerHTML += `<p style="margin-bottom:8px;">${row.innerHTML}</p>`;
+                    });
+
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden'; // لمنع التمرير في الخلفية
+                });
+            });
+
+            // إغلاق النافذة المنبثقة بالزر
+            closeBtn.addEventListener('click', () => {
+                closeModal();
+            });
+
+            // إغلاق النافذة المنبثقة بالنقر خارجها
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // إغلاق النافذة المنبثقة بزر Escape من لوحة المفاتيح
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.style.display === 'block') {
+                    closeModal();
+                }
+            });
+
+            function closeModal() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // إعادة التمرير للصفحة
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<html>
+    <style>
+        body {
+            text-align: center;
+        }   
+        h1 {
+            background-color: darkcyan;
+            color: white;
+        }      
+        p {
+            color :darkslategrey;
+        }
+		Button{
+			width: 280;
+			height: 55;
+			font-size: 25px;
+		}
+		div {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 15px;
+			 justify-content: center; 
+			   counter-reset: btn-counter;
+		}
+		div a {
+			counter-increment: btn-counter; /* increases counter for each <a> */
+		}
+		div a::before {
+			content: counter(btn-counter) ". "; /* adds number before text */
+			margin-right: 5px;
+		}
+    </style>
+    <head>
+        <title>Mahrgan 2025</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+	</head>
+    <body>
+		<h2>مسابقة كمبيوتر سنة 3 و 4  ابتدائي</h2>
+		<h3> كنيسة السيدة العذراء مريم بالزيتون</h3>
+		<hr>
+		<div>		
+			<a href="kirollosOsama/information.HTML">
+				<button class="btn btn-lg btn-primary">   كيرلس أسامه</button>
+			</a>
+			
+			
+		</div>
+		<hr>
+    </body>
+</html>
