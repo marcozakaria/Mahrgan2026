@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>موقع دير مارمينا - تصميم مبتكر</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+body {
+background: #080711;
+color: #d1d2d6;
+overflow-x: hidden;
+}
+.bg-glow {
+position: fixed;
+top: -20%;
+left: -20%;
+width: 70%;
+height: 70%;
+background: radial-gradient(circle, #4a3e9d 0%, rgba(8,7,17,0) 70%);
+filter: blur(80px);
+z-index: -1;
+opacity: 0.6;
+}
+.container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 2rem;
+}
+header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+background: rgba(255, 255, 255, 0.05);
+backdrop-filter: blur(15px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+padding: 1rem 2rem;
+border-radius: 30px;
+margin-bottom: 3rem;
+box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.logo {
+font-size: 1.5rem;
+font-weight: 700;
+background: linear-gradient(45deg, #c3a6ff, #6d4aff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+nav {
+display: flex;
+gap: 1.5rem;
+}
+nav a {
+color: #fff;
+text-decoration: none;
+font-size: 1rem;
+padding: 0.5rem 1rem;
+border-radius: 20px;
+transition: all 0.3s ease;
+}
+nav a:hover, nav a.active {
+background: rgba(255, 255, 255, 0.1);
+color: #c3a6ff;
+box-shadow: 0 0 15px rgba(109,74,255,0.5);
+}
+main {
+display: grid;
+grid-template-columns: repeat(12, 1fr);
+gap: 2rem;
+}
+.page-section {
+display: none;
+grid-column: span 12;
+background: rgba(255, 255, 255, 0.03);
+backdrop-filter: blur(20px);
+border: 1px solid rgba(255, 255, 255, 0.08);
+border-radius: 25px;
+padding: 3rem;
+animation: appear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+.page-section.active { display: block; }
+@keyframes appear {
+from { opacity: 0; transform: translateY(30px); }
+to { opacity: 1; transform: translateY(0); }
+}
+h2 {
+font-size: 2.5rem;
+margin-bottom: 1.5rem;
+color: #fff;
+position: relative;
+}
+p {
+font-size: 1.2rem;
+line-height: 1.8;
+color: #a0a1a7;
+margin-bottom: 2rem;
+}
+.gallery-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 2rem;
+}
+.photo-card {
+height: 250px;
+border-radius: 20px;
+background-size: cover;
+background-position: center;
+border: 1px solid rgba(255,255,255,0.1);
+transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+cursor: pointer;
+position: relative;
+overflow: hidden;
+}
+.photo-card::after {
+content: '';
+position: absolute;
+bottom: 0;
+left: 0;
+width: 100%;
+height: 50%;
+background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+z-index: 1;
+}
+.photo-card:hover {
+transform: scale(1.03) translateY(-10px);
+border-color: #6d4aff;
+box-shadow: 0 20px 40px rgba(109,74,255,0.3);
+}
+.card-title {
+position: absolute;
+bottom: 20px;
+left: 20px;
+z-index: 2;
+color: #fff;
+font-weight: 700;
+font-size: 1.2rem;
+}
+.modal {
+display: none;
+position: fixed;
+z-index: 1000;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0,0,0,0.8);
+justify-content: center;
+align-items: center;
+}
+.modal-content {
+max-width: 80%;
+max-height: 80%;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(211, 203, 203, 0.5);
+}
+.close {
+position: absolute;
+top: 20px;
+right: 30px;
+color: #fff;
+font-size: 40px;
+font-weight: bold;
+cursor: pointer;
+}
+.form-group { margin-bottom: 2rem; }
+label {
+display: block;
+margin-bottom: 0.8rem;
+color: #c3a6ff;
+font-weight: 700;
+}
+input {
+width: 100%;
+padding: 1rem;
+background: rgba(0,0,0,0.5);
+border: 1px solid rgba(255,255,255,0.1);
+border-radius: 15px;
+color: #fff;
+font-size: 1.1rem;
+transition: all 0.3s ease;
+}
+input:focus {
+outline: none;
+border-color: #6d4aff;
+background: rgba(0,0,0,0.7);
+box-shadow: 0 0 15px rgba(109,74,255,0.3);
+}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="container">
+<header>
+<div class="logo">موقع دير مارمينا</div>
+<nav>
+<a href="#about" class="nav-link active" onclick="switchPage('about')">الترحيب</a>
+<a href="#info" class="nav-link" onclick="switchPage('info')">المعلومات</a>
+<a href="#gallery" class="nav-link" onclick="switchPage('gallery')">المعرض</a>
+<a href="#contestant" class="nav-link" onclick="switchPage('contestant')">بياناتي</a>
+</nav>
+</header>
+<main>
+<section id="about" class="page-section active">
+<h2>أهلاً بكم في موقعي!</h2>
+<p>مرحباً بكم في الموقع الخاص بي، أنا كيرلس مينا، طالب في الصف الخامس الابتدائي في فصل أبونا فيلتاؤس. هذا الموقع هو مشروعي الخاص عن دير الشهيد العظيم مارمينا العجائبي، وأتمنى أن ينال إعجابكم.</p>
+</section>
+<section id="info" class="page-section">
+<h2>معلومات عن دير مارمينا</h2>
+<p>يقع دير الشهيد العظيم مارمينا العجائبي في منطقة مريوط بصحراء مصر الغربية، وهو واحد من أهم وأشهر الأديرة القبطية الأثرية في العالم. يعتبر هذا المكان المقدس منارة روحية عظيمة تشع بالسلام والمحبة، ويقصده آلاف الزوار سنوياً طلباً للبركة والشفاء والهدوء.</p>
+<p>تاريخ الدير يعود إلى العصور المسيحية الأولى، حيث استشهد القديس مارمينا في نهاية القرن الثالث الميلادي، وجسده تم نقله ودُفن في هذه الصحراء وفقاً لوصيته. ومع مرور الوقت، تحولت المنطقة إلى مدينة كاملة وعاصمة دينية أُطلق عليها اسم "مدينة الرخام" أو "أبومينا" وكانت ملاذاً ومقصداً للحجاج من كافة أرجاء الإمبراطورية الرومانية والبيزنطية. ويتميز الدير بوجود الكنيسة الأثرية القديمة، بالإضافة إلى المزار المقدس الذي يضم رفات القديس الشهيد حتى اليوم.</p>
+</section>
+<section id="gallery" class="page-section">
+<h2>المعرض البصري</h2>
+<div class="gallery-grid">
+<div class="photo-card" onclick="openModal('images.jpg')" style="background-image: url('images.jpg');">
+<div class="card-title">الكنيسة أو الكاتدرائية</div>
+</div>
+<div class="photo-card" onclick="openModal('mm.webp')" style="background-image: url('mm.webp');">
+<div class="card-title">أيقونة</div>
+</div>
+<div class="photo-card" onclick="openModal('images (1).jpg')" style="background-image: url('images (1).jpg');">
+<div class="card-title">صورة لمارينا</div>
+</div>
+</div>
+</section>
+<section id="contestant" class="page-section">
+<h2>بياناتي</h2>
+<div class="form-group">
+<label>الاسم:</label>
+<input type="text" value="كرولس مينا جورج">
+</div>
+<div class="form-group">
+<label>الفصل:</label>
+<input type="text" value="أبونا فلتاؤس">
+</div>
+<div class="form-group">
+<label>رقم الهاتف:</label>
+<input type="text" value="01275299868">
+</div>
+</section>
+</main>
+</div>
+<div id="myModal" class="modal" onclick="closeModal()">
+<span class="close" onclick="closeModal()">×</span>
+<img class="modal-content" id="imgModal">
+</div>
+<script>
+function switchPage(sectionId) {
+const sections = document.querySelectorAll('.page-section');
+sections.forEach(section => section.classList.remove('active'));
+const links = document.querySelectorAll('.nav-link');
+links.forEach(link => link.classList.remove('active'));
+document.getElementById(sectionId).classList.add('active');
+event.currentTarget.classList.add('active');
+}
+function openModal(imgSrc) {
+document.getElementById('myModal').style.display = "flex";
+document.getElementById('imgModal').src = imgSrc;
+}
+function closeModal() {
+document.getElementById('myModal').style.display = "none";
+}
+</script>
+</body>
+</html>
