@@ -1,0 +1,6 @@
+ body{background-color: lightblue; text-align: center;}
+  h1 {color: black;text-align: center;}
+  p{text-align: center;font-size: 20px;}
+  button{border-radius: 90px;color: white;width: 300; height: 150; background-color: blue; font-size: larger; cursor: pointer;}
+  img{border-radius: 150px; width: 300;height: 400}
+  
