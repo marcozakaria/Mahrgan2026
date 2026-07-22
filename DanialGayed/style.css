@@ -1,0 +1,13 @@
+body{background-color:light blue;text-align: center;}
+h1{color:gray;background-color: blue;}
+p{text-align: center; color:blanchedalmond}
+img{width:300;border-radius: 12px;}
+BUTTON{background-color: aliceblue;color: blue
+    border: none; 
+width: 140;
+height: 45;
+font-size: 16px;
+border-radius: 5px
+cursor:pointer;}
+button{background-color: blue;}
+.about me{font-size: 18;color: black;}
