@@ -1,0 +1,41 @@
+body {
+    background-color:black;
+    text-align: center;
+}
+
+     color:darkblue;
+     background-color: turquoise;
+
+p  {
+     font-size: 35;
+}
+
+button  {
+       background-color: antiquewhite;
+        color: black
+        border: none;
+        width: 125;
+        height: 50;
+        font-size: 25;
+        border-radius: 15px;
+        cursor: pointer;
+}
+
+
+button:hover  {
+
+    background-color: darkgrey;
+}
+
+img  {
+   width: 310;
+   height: 260;
+   border-radius: 15px;
+}
+
+aboutme {
+  font-size: 35;
+  display: inline-block;
+  text-align: left;
+
+}
