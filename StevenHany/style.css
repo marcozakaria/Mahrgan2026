@@ -1,0 +1,25 @@
+body{
+        background-color: lightblue;
+        text-align: center;
+           }
+        h1{
+        color:orange;
+        text-align:center;
+        background-color:yellow; 
+          }
+        p{
+        color:black;
+        text-align:center;
+        font-size: 30px;
+        }
+        img{
+        width: 500;
+        border-radius: 75px;  
+        }
+        button{
+        background-color: green;
+        cursor: pointer;
+        width: 160;
+        height: 70;
+        font-size: 20;
+        }
