@@ -1,0 +1,33 @@
+body{
+background-color: rgb(139, 0, 0);
+text-align: center;
+}
+
+h1{
+color: rgb(255, 239, 59);
+text-align: center;
+font-size: 40;
+
+}
+
+p{
+
+     color: rgb(255, 239, 59);
+     line-height: 1.8;
+    text-align: center;
+    font-size: 20;
+}
+a{
+    color: rgb(139, 0, 0);
+    text-align: left;
+}
+button{
+    background-color: rgb(139, 0, 0);
+    color:rgb(255, 239, 59) ;
+    border: none
+    width  140;
+    height: 30;
+    font-size: 16px
+    border-radius    5px;
+    cursor : pointer 
+}
