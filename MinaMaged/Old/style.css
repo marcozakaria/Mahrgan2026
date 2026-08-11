@@ -1,0 +1,125 @@
+body {
+        background-color:aliceblue;
+    }
+    
+    h1 {
+        text-align: center;
+    }
+
+     h3 {
+        text-align: center;
+    }
+body {
+    background-color:lightblue;
+     text-align: center;
+}
+
+h1 {
+    color:black;
+    background-color:lightblue;
+}
+
+p {
+    text-align: center;
+    color:green;
+}
+
+img {
+    width: 300;
+    border-radius:12px;
+}
+
+button {
+    background-color: steelblue;
+    color: white;
+    border:none;
+    width: 140;
+    height: 45;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: dodgerblue;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
